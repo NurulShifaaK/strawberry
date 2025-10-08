@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import weatherbanner from "../../assets/weather.mp4"
+
 
 const Weather = () => {
   const [city, setCity] = useState("");
