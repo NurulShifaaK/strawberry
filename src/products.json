@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "category": "Cleanser",
+    "description": "CENTELLA, LIGHT CLEANSING OIL",
+    "rate": 50,
+    "skin": "Normal",
+    "imageUrl": "/images/cleanser/clean4.jpg",
+    "hoverImageUrl": "/images/cleanser/cleanhov1.jpeg"
+  },
+  {
+    "id": 2,
+    "category": "Cleanser",
+    "description": "LA ROCHE-POSAY, DAILY REPAIR CLEANSER",
+    "rate": 150,
+    "skin": "Oily",
+    "imageUrl": "/images/cleanser/clean1.jpg",
+    "hoverImageUrl": "/images/cleanser/cleanhov2.jpeg"
+  }
+]
