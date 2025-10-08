@@ -4,6 +4,9 @@ import { db } from "../../firebasedata.js";
 import { doc, getDoc } from "firebase/firestore";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import axios from "axios";
+
+
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -11,6 +14,62 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
 
   const { addToCart } = useContext(CartContext);
+
+  const localbackendurl = 'http://localhost:8000/api/payment'
+
+
+
+const handlebuynow = async () => {
+  try {
+    const { data } = await axios.post(`${localbackendurl}`, { amount: product.rate });
+    initPayment(data.data);
+  } catch (err) {
+    console.error("Payment order creation failed:", err);
+  }
+};
+
+
+
+  const loadRazorpayScript = () => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
+
+const initPayment = async (orderData) => {
+  const res = await loadRazorpayScript();
+  if (!res) {
+    alert("Razorpay SDK failed to load. Check your internet connection.");
+    return;
+  }
+
+  const options = {
+    key: "rzp_test_RQx3HfvLghKrHW",
+    amount: orderData.amount,
+    currency: orderData.currency,
+    description: "Test Payment method",
+    order_id: orderData.id,
+  
+    handler:async(res)=>{
+    await axios.post(`${localbackendurl}/verify`,res).then((res)=>{
+      if(res.status === 200){
+        alert("Payment sucess");
+
+      }else{
+        alert("Payment Failed")
+      }
+    })
+    },
+    theme: { color: "#d0c1f0" },
+  };
+
+  const razorpay_popup = new window.Razorpay(options);
+  razorpay_popup.open();
+};
 
 
   useEffect(() => {
@@ -59,9 +118,20 @@ const ProductDetail = () => {
       <p className="mt-4 text-xl font-semibold">${product.rate}</p>
      
      <div className="flex gap-2">
-     <button className="bg-violet-500 text-white px-6 py-1 rounded my-2 hover:bg-violet-400">Buy</button>
 
-       <Link to={"/carts"}  state={{product}}><button onClick={()=>addToCart(product)} className="bg-violet-500 text-white px-6 py-1 rounded my-2 hover:bg-violet-400">Add to Whislist</button></Link>
+     <button
+      onClick={handlebuynow}
+     className="bg-violet-500 text-white px-6 py-1 rounded my-2
+      hover:bg-violet-400">Buy</button>
+
+      <Link to={"/carts"}  
+      state={{product}}>
+        <button 
+        onClick={()=>addToCart(product)} 
+        
+        className="bg-violet-500 text-white px-6 py-1 rounded my-2
+         hover:bg-violet-400">Add to Whislist</button>
+         </Link>
 
  
 

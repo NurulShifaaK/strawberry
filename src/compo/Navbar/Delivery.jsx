@@ -7,22 +7,22 @@ import feedback from "../../assets/delivery/feedback.png";
 const Delivery = () => {
   return (
     <div className='flex flex-col'>
-        <p className='text-center font-semibold text-2xl mt-6'>Why Veloura Éternelle? </p>
+        <p className='text-center font-semibold text-2xl mt-6'>Why Aurora? </p>
         <div className='flex justify-around mt-8 '>
             <div className='flex flex-col gap-2 items-center'>
-            <img className='w-[100px] h-[100px]' src={truck} />
+            <img className='w-[50px] h-[50px] md:w-[80px] md:h-[80px]' src={truck} />
             <p>Free Delivery</p>
             </div>
             <div className='flex flex-col gap-2 items-center'>
-            <img className='w-[100px] h-[100px]' src={world} />
+            <img  className='w-[50px] h-[50px] md:w-[80px] md:h-[80px]'  src={world} />
             <p>WorldWide</p>
             </div>
             <div className='flex flex-col gap-2 items-center'>
-            <img className='w-[100px] h-[100px]' src={support} />
+            <img className='w-[50px] h-[50px] md:w-[80px] md:h-[80px]'  src={support} />
             <p>24/7 Care</p>
             </div>
             <div className='flex flex-col gap-2 items-center'>
-            <img className='w-[100px] h-[100px]' src={feedback} />
+            <img  className='w-[50px] h-[50px] md:w-[80px] md:h-[80px]'  src={feedback} />
             <p>Best Quality</p>
             </div>
         </div>

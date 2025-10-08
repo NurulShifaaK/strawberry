@@ -27,7 +27,7 @@ const Navbar = () => {
       <div className="flex justify-between items-center px-4 py-2 shadow-md">
      
         <p className="text-2xl font-semibold cursor-pointer">
-          Veloura Éternelle
+          Aurora
         </p>
 
       
@@ -81,8 +81,8 @@ const Navbar = () => {
       >
         {/* Menu Links */}
         <div className="space-y-4 px-6 py-6 w-48">
-          <p className="hover:underline">Gifts</p>
-         <Link to={"/allproduct"}><p className="hover:underline py-4">Products</p></Link> 
+          <Link to={"/home"}><p className="hover:underline p-2">Home</p></Link>
+         <Link to={"/allproduct"}><p className="hover:underline p-2">Products</p></Link> 
           <p className="hover:underline">Analyzer</p>
           <p className="hover:underline">Order</p>
           <p className="hover:underline">Cart</p>

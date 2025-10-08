@@ -155,23 +155,23 @@ const Weather = () => {
         </p>
 
         {/* Weather Info */}
-        <div className="bg-white/30 md:mt-4 mt-1 py-4 mx-auto rounded-2xl p-4 w-11/12 sm:w-4/5 flex flex-col gap-4 shadow-2xl">
+        <div className="bg-white/30 sm:mt-4 mt-1 py-4 mx-auto rounded-2xl p-4 w-11/12 sm:w-4/5 flex flex-col gap-1 sm:gap-4 shadow-2xl">
         <div className='flex items-center justify-between px-4'>
-        <p className='text-white text-sm md:text-xl font-bold'>Skincare Recomendation based on weather</p>
-          <p className="text-white text-sm md:text-2xl text-center font-semibold">{currentTime}</p>
+        <p className='text-white text-sm sm:text-xl font-bold p-1'>Skincare Recomendation based on weather</p>
+          <p className="text-white text-sm sm:text-2xl text-center font-semibold ">{currentTime}</p>
 </div>
           <div className="flex justify-around items-center text-white">
-            <p className="text-lg md:text-4xl">
+            <p className="text-lg sm:text-4xl">
               {today?.timelines?.hourly?.[0]?.values?.temperature
                 ? `${Math.round(today.timelines.hourly[0].values.temperature)}°C`
                 : "35°C"}
             </p>
-            <p className="capitalize font-semibold text-sm md:text-xl">{weatherDetails.weather?.[0]?.description}</p>
+            <p className="capitalize font-semibold text-sm sm:text-xl">{weatherDetails.weather?.[0]?.description}</p>
             <p className='font-semibold text-sm md:text-xl'>{season}</p>
           </div>
 
           {/* Skincare Cards */}
-          <div className="grid grid-cols-1 gap-1 md:grid-cols-3 sm:grid-cols-3 md:gap-4  text-white w-fit">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 text-white w-fit">
             <div className="bg-white/20 p-4 rounded-xl">
               <h2 className="font-semibold text-sm md:text-xl ">Sunscreen</h2>
               <p className='text-sm md:text'>{getSunscreen(uv)}</p>
@@ -180,7 +180,7 @@ const Weather = () => {
               <h2 className="font-semibold text-sm md:text-xl">Moisturizer</h2>
               <p className='text-sm md:text' >{getMoisturizer(weatherDetails.main?.humidity)}</p>
             </div>
-            <div className="bg-white/20 p-4 rounded-xl hidden md:block ">
+            <div className="bg-white/20 p-4 rounded-xl hidden sm:block ">
               <h2 className="font-semibold text-sm md:text-xl w-fit">Serum</h2>
               <p className='text-sm md:text'>{getSerum(season, today?.timelines?.hourly?.[0]?.values?.temperature)}</p>
             </div>
@@ -192,3 +192,5 @@ const Weather = () => {
 };
 
 export default Weather;
+
+

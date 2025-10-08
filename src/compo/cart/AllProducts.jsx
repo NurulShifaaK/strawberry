@@ -95,20 +95,22 @@ console.log("Products:", products);
     </div>):null}
       {/* search */}
 
-      <div className="mt-5 text-center relative">
-        <input
-          className="px-4 py-1 border w-4/5 rounded-xl border-black/20 focus:outline-none"
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search your product..."
-        />
+<div className="mt-5 text-center relative">
+  <input
+    className="px-4 py-1 border w-4/5 rounded-xl border-black/20 focus:outline-none"
+    type="text"
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    placeholder="Search your product..."
+  />
 
-          <img className='h-[25px] absolute bottom-1 left-[20px] md:left-[90px]' 
-          src={ficon}
-          onClick={handlefilter} />
+  <img
+    className="h-[25px]  absolute bottom-1 left-5 md:left-[90px] cursor-pointer"
+    src={ficon}
+    onClick={handlefilter}
+  />
+</div>
 
-      </div>
     
 
       {/* filter */}
