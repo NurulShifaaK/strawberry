@@ -120,15 +120,15 @@ const Weather = () => {
   return (
     <div className="relative h-[400px] w-full rounded overflow-hidden">
       {/* Video Background */}
-      <video
+      {/* <video
         autoPlay
         loop
         muted
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src={weatherbanner} type="video/mp4" />
-      </video>
+        <source type="video/mp4" />
+      </video> */}
 
     
       <div className="absolute inset-0 bg-black/40"></div>
