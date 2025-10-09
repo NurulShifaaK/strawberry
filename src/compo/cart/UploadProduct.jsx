@@ -14,7 +14,7 @@ const UploadProduct = ({ onUpload }) => {
     formData.append("file", file);
 
     try {
-      const res = await axios.post("http://localhost:5000/upload", formData, {
+      const res = await axios.post("https://strawberry-backend.onrender.com/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

@@ -16,7 +16,7 @@ const ProductDetail = () => {
 
   const { addToCart } = useContext(CartContext);
 
-  const localbackendurl = 'http://localhost:8000/api/payment'
+  const localbackendurl = 'https://strawberry-backend.onrender.com/api/payment'
 
 
 

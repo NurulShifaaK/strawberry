@@ -17,7 +17,7 @@ const Cart = () => {
   );
 
 
-    const localbackendurl = 'http://localhost:8000/api/payment'
+    const localbackendurl = 'https://strawberry-backend.onrender.com/api/payment'
 
 
 const handlebuynow = async () => {
