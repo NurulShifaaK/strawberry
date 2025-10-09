@@ -171,12 +171,11 @@ const initPayment = async (orderData) => {
      className="bg-violet-500 text-white px-6 py-1 rounded my-2
       hover:bg-violet-400">Buy</button>
 
-      <Link to={"/carts"}  
+      <Link to="/carts"
       state={{product}}>
         <button 
         onClick={()=>addToCart(product)} 
-        
-        className="bg-violet-500 text-white px-6 py-1 rounded my-2
+         className="bg-violet-500 text-white px-6 py-1 rounded my-2
          hover:bg-violet-400">Add to Whislist</button>
          </Link>
 
