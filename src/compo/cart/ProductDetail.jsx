@@ -95,22 +95,23 @@ const initPayment = async (orderData) => {
   //   })
   //   },
 
-      handler: async (res) => {
-      const verify = await axios.post(`${localbackendurl}/verify`, res);
-      if (verify.status === 200) {
-        alert("Payment Success");
+   handler: async (res) => {
+  const verify = await axios.post(`${localbackendurl}/verify`, res);
+  if (verify.status === 200) {
+    const currentEmail = auth.currentUser?.email; 
 
-        await axios.post("https://strawberry-backend.onrender.com/api/sendconfirmation", {
-          email: userEmail,
-          orderId: orderData.id,
-          amount: orderData.amount / 100,
-        });
+    await axios.post("https://strawberry-backend.onrender.com/api/sendconfirmation", {
+      email: currentEmail,
+      orderId: orderData.id,
+      amount: orderData.amount / 100,
+    });
 
-        navi("/order");
-      } else {
-        alert("Payment Failed");
-      }
-    },
+    alert("Payment Success");
+    navi("/order");
+  } else {
+    alert("Payment Failed");
+  }
+},
     theme: { color: "#d0c1f0" },
   };
 
