@@ -100,7 +100,7 @@ const initPayment = async (orderData) => {
   if (verify.status === 200) {
     const currentEmail = auth.currentUser?.email; 
 
-    await axios.post("https://strawberry-backend.onrender.com/api/sendconfirmation", {
+    await axios.post("https://strawberry-backend.onrender.com/api/send", {
       email: currentEmail,
       orderId: orderData.id,
       amount: orderData.amount / 100,
