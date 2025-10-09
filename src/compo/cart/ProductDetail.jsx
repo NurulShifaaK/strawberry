@@ -5,6 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import axios from "axios";
+import Blog from "./Blog.jsx";
 
 
 
@@ -135,6 +136,11 @@ const initPayment = async (orderData) => {
 
  
 
+      </div>
+      
+      <div className="mt-4">
+      <p className="font-bold text-2xl text-black/80">Review</p>
+   <Blog/>
       </div>
     </div>
   );

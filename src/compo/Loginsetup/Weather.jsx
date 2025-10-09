@@ -150,12 +150,12 @@ const Weather = () => {
             Search
           </button>
         </div>
-        <p className="text-white px-4 mt-4 hidden sm:block md:block text-2xl text-center font-bold">
+        <p className="text-white px-4 mt-2 hidden sm:block md:block text-2xl text-center font-bold">
           {weatherDetails.name}
         </p>
 
         {/* Weather Info */}
-        <div className="bg-white/30 sm:mt-4 mt-1 py-4 mx-auto rounded-2xl p-4 w-11/12 sm:w-4/5 flex flex-col gap-1 sm:gap-4 shadow-2xl">
+        <div className="bg-white/30 sm:mt-2 mt-1 py-4 mx-auto rounded-2xl p-4 w-11/12 sm:w-4/5 flex flex-col gap-1 sm:gap-4 shadow-2xl">
         <div className='flex items-center justify-between px-4'>
         <p className='text-white text-sm sm:text-xl font-bold p-1'>Skincare Recomendation based on weather</p>
           <p className="text-white text-sm sm:text-2xl text-center font-semibold ">{currentTime}</p>

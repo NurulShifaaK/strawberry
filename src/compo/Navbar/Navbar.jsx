@@ -11,9 +11,12 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   const handleMenu = () => {
-    setOpen(!open);
+    setOpen(true);
   };
 
+  const handleclose=()=>{
+    setOpen(false)
+  }
   const items = [
     { name: "Home", path: "/home" },
     { name: "Products", path: "/allproduct" },
@@ -60,7 +63,8 @@ const Navbar = () => {
        
         <div className="flex md:hidden gap-2">
           <div className="relative">
-          <img src={search} alt="Search" className="h-6 w-6 cursor-pointer" />
+            <Link to={"/carts"}>
+          <img src={search} alt="Search" className="h-6 w-6 cursor-pointer" /></Link>
           <p 
           className="text-[9px] bg-violet-400 rounded-3xl text-center w-full bottom-5 text-white absolute left-2">
             1</p>
@@ -79,18 +83,21 @@ const Navbar = () => {
         className={`absolute top-12 left-0 h-screen bg-white shadow-xl flex transition-transform duration-2000 ease-in-out z-80 
           ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
+        <p className=" cursor-pointer p-2 "
+        onClick={handleclose}
+        >X</p>
         {/* Menu Links */}
-        <div className="space-y-4 px-6 py-6 w-48">
+        <div className="space-y-4 px-6 py-6 w-48 mt-6">
           <Link to={"/home"}><p className="hover:underline p-2">Home</p></Link>
          <Link to={"/allproduct"}><p className="hover:underline p-2">Products</p></Link> 
-          <p className="hover:underline">Analyzer</p>
-          <p className="hover:underline">Order</p>
-          <p className="hover:underline">Cart</p>
-          <p className="hover:underline bg-violet-500 px-2 py-1 rounded text-white font-semibold">Login</p>
+         <Link to={"/allproduct"}><p className="hover:underline p-2">Orders</p></Link> 
+          <Link to={"/carts"}><p className="hover:underline p-2">Cart</p></Link> 
+          <Link to={"/allproduct"}><p className="hover:underline p-2">Chat With Us</p></Link> 
+          <p className="hover:underline bg-violet-400 px-2 py-1 rounded mt-4 text-white font-semibold">Login</p>
         </div>
 
        
-         <div className="flex gap-2 p-2">
+         <div className="sm:flex gap-2 p-2 hidden ">
           <div>
             <img
               className="rounded h-[260px] w-[200px] object-cover shadow p-1"

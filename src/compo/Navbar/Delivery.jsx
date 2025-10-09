@@ -7,7 +7,7 @@ import feedback from "../../assets/delivery/feedback.png";
 const Delivery = () => {
   return (
     <div className='flex flex-col'>
-        <p className='text-center font-semibold text-2xl mt-6'>Why Aurora? </p>
+        <p className='text-center font-semibold text-2xl'>Why Aurora? </p>
         <div className='flex justify-around mt-8 '>
             <div className='flex flex-col gap-2 items-center'>
             <img className='w-[50px] h-[50px] md:w-[80px] md:h-[80px]' src={truck} />

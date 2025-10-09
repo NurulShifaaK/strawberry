@@ -105,7 +105,7 @@ console.log("Products:", products);
   />
 
   <img
-    className="h-[25px]  absolute bottom-1 left-5 md:left-[90px] cursor-pointer"
+    className="h-[25px]  absolute bottom-1 left-2 sm:left-[40px] md:left-[55px] cursor-pointer"
     src={ficon}
     onClick={handlefilter}
   />
