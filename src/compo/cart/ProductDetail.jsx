@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams ,Navigate} from "react-router-dom";
+import { Link, useParams ,useNavigate} from "react-router-dom";
 import { db } from "../../firebasedata.js";
 import { doc, getDoc } from "firebase/firestore";
 import { useContext } from "react";
@@ -12,7 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 
 
 const ProductDetail = () => {
-  const navi=Navigate()
+  const navi=useNavigate()
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -100,7 +100,7 @@ const initPayment = async (orderData) => {
       if (verify.status === 200) {
         alert("Payment Success");
 
-        await axios.post("http://localhost:8000/api/sendconfirmation", {
+        await axios.post("https://strawberry-backend.onrender.com/api/sendconfirmation", {
           email: userEmail,
           orderId: orderData.id,
           amount: orderData.amount / 100,
