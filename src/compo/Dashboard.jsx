@@ -9,6 +9,7 @@ import Cart from "./cart/Cart";
 import AllProducts from "./cart/AllProducts";
 import Weather from "./Loginsetup/Weather";
 import ProductDetail from "./cart/ProductDetail";
+import Order from "./cart/Order";
 
 
 
@@ -29,6 +30,7 @@ const Dashboard = () => {
         <Route path="/allproduct" element={<AllProducts/>}/>
         <Route path="/weather" element={<Weather/>}/>
         <Route path="/product/:id" element={<ProductDetail/>}></Route>
+        <Route path="/order" element={<Order/>}/>
       </Routes>
     </BrowserRouter>
   );

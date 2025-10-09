@@ -103,7 +103,7 @@ const initPayment = async (orderData) => {
             ))}
           </div>
         
-     <div className="shadow p-4 rounded-lg mt-6 bg-violet-300/50 text-black/50">
+     <div className="shadow p-4 rounded-lg mt-6 bg-violet-300/50 ">
             <p className="text-xl font-semibold mb-2">Product Details</p>
 
             {cartItems.map((item, i) => (

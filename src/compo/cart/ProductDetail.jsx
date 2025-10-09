@@ -1,22 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams ,Navigate} from "react-router-dom";
 import { db } from "../../firebasedata.js";
 import { doc, getDoc } from "firebase/firestore";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import axios from "axios";
 import Blog from "./Blog.jsx";
+import {auth} from "../../firebase.js"
+import { onAuthStateChanged } from "firebase/auth";
 
 
 
 const ProductDetail = () => {
+  const navi=Navigate()
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userEmail, setUserEmail] = useState(null);
+
 
   const { addToCart } = useContext(CartContext);
 
   const localbackendurl = 'https://strawberry-backend.onrender.com/api/payment'
+
+
+   useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUserEmail(user.email);
+      console.log("Logged in user:", user.email);
+    } else {
+      setUserEmail(null);
+    }
+  });
+
+  return () => unsubscribe(); 
+}, []);
 
 
 
@@ -55,15 +74,42 @@ const initPayment = async (orderData) => {
     description: "Test Payment method",
     order_id: orderData.id,
   
-    handler:async(res)=>{
-    await axios.post(`${localbackendurl}/verify`,res).then((res)=>{
-      if(res.status === 200){
-        alert("Payment sucess");
+  //   handler:async(res)=>{
+  //  const verify= await axios.post(`${localbackendurl}/verify`,res).then((res)=>{
+  //     if(res.status === 200){
+  //       alert("Payment sucess");
+        
 
-      }else{
-        alert("Payment Failed")
+  //       await axios.post("http://localhost:8000/api/send-confirmation", {
+  //         email: userEmail,
+  //         orderId: order.data.data.id,
+  //         amount: order.data.data.amount / 100,
+  //       });
+
+  //         navi("/order")
+  //     }
+      
+  //     else{
+  //       alert("Payment Failed")
+  //     }
+  //   })
+  //   },
+
+      handler: async (res) => {
+      const verify = await axios.post(`${localbackendurl}/verify`, res);
+      if (verify.status === 200) {
+        alert("Payment Success");
+
+        await axios.post("http://localhost:8000/api/sendconfirmation", {
+          email: userEmail,
+          orderId: orderData.id,
+          amount: orderData.amount / 100,
+        });
+
+        navi("/order");
+      } else {
+        alert("Payment Failed");
       }
-    })
     },
     theme: { color: "#d0c1f0" },
   };

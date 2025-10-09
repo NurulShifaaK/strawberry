@@ -14,6 +14,7 @@ const authConfig = {
 const authApp = !firebase.apps.some(a => a.name === "authApp")
   ? firebase.initializeApp(authConfig, "authApp")
   : firebase.app("authApp");
+  
 
 export const auth = authApp.auth();
 export const googleProvider = new firebase.auth.GoogleAuthProvider();

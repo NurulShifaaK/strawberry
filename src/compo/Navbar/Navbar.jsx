@@ -55,9 +55,11 @@ const Navbar = () => {
             Login
           </Link>
          
+         <Link to={"/carts"}>
           <button className="hover:bg-black/20 px-3 py-1 rounded font-semibold">
             Cart
           </button>
+          </Link>
         </div>
 
        
