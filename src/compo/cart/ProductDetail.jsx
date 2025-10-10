@@ -244,7 +244,7 @@ const ProductDetail = () => {
 
   const handlebuynow = async () => {
     try {
-      const { data } = await axios.post(localbackendurl, { amount: product.rate });
+      const { data } = await axios.post(`${localbackendurl}`, { amount: product.rate });
       initPayment(data.data);
     } catch (err) {
       console.error("Payment order creation failed:", err);
