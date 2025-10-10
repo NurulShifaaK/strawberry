@@ -118,7 +118,10 @@ const initPayment = async (orderData) => {
      handler:async(res)=>{
     await axios.post(`${localbackendurl}/verify`,res).then( async(res)=>{
       if(res.status === 200){
-        axios.get("https://strawberry-backend.onrender.com/sendemail")  
+      alert("Payment Sucess") 
+         addOrder(product);   
+        navi("/order");
+
       }else{
         alert("Payment Failed")
       }
