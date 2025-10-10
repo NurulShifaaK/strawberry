@@ -118,8 +118,9 @@ const initPayment = async (orderData) => {
      handler:async(res)=>{
     await axios.post(`${localbackendurl}/verify`,res).then( async(res)=>{
       if(res.status === 200){
-        alert("Payment sucess");
-        navi("/order")
+
+       navi("order")
+       
       }else{
         alert("Payment Failed")
       }

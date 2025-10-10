@@ -11,7 +11,7 @@ import Spline from '@splinetool/react-spline';
 
 
 
-// import Splineserum from "../spline/Splineserum";
+
 
 
 
@@ -57,9 +57,11 @@ const Home = () => {
       <p className="font-bold text-black/80 text-2xl text-center">Features Of Aurora</p>
       <p className="font-semibold text-black/80 text-sm font-serif text-center">Meet your skin’s new favorite obsession</p>
       
-    <div className="relative w-full h-[300px] sm:h-[400px] mx-auto bg-white">
+    <div className="relative w-full h-[300px] sm:h-[400px] mx-auto bg-white md:hidden">
 
    <Spline scene="https://prod.spline.design/IiBz4kW2RN1Ee1xm/scene.splinecode" />
+
+   
 
    <div className="absolute bottom-0 right-0 w-[170px] h-[90px] bg-white"></div>
       </div>
