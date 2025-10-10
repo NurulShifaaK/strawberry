@@ -12,9 +12,8 @@ import upload from "../../assets/admin/upload.png"
 import ProductDetail from "./ProductDetail.jsx";
 import { Link } from "react-router-dom";
 import {auth} from "../../firebase"
-import heart from "../../assets/heart.png"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+
+
 
 
 
@@ -209,19 +208,7 @@ console.log("Products:", products);
                {/* <button><img
                 src={heart}
                 className="h-[5px]"/></button> */}
-                 <button
-      onClick={() => setLiked(!liked)}
-      className="transition-transform duration-200"
-    >
-      <FontAwesomeIcon
-        icon={faHeart}
-        className={`text-xl transform transition-all duration-300 ${
-          liked
-            ? "text-violet-500 scale-110" 
-            : "text-black/20 hover:text-violet-400 hover:scale-110" 
-        }`}
-      />
-    </button>
+                <button>Add</button>
               </div>
             </div>
           ))
