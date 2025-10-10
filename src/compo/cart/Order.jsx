@@ -2,7 +2,8 @@ import React from 'react'
 
 const Order = () => {
   return (
-    <div>Order</div>
+   <>
+   <p>hello</p></>
   )
 }
 
