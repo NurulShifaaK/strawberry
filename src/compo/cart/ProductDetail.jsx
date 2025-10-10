@@ -116,14 +116,15 @@ const initPayment = async (orderData) => {
 //   };
 
    handler:async(res)=>{
-    await axios.post(`${localbackendurl}/verify`,res).then((res)=>{
+   const verify= await axios.post(`${localbackendurl}/verify`,res)
       if(res.status === 200){
         alert("Payment sucess");
+        await axios.post(`${localbackendurl}/sendemail`,{userEmail:userEmail})
 
       }else{
         alert("Payment Failed")
       }
-    })
+    
     },
     theme: { color: "#d0c1f0" },
   };
