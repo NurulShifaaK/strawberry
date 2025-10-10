@@ -95,23 +95,36 @@ const initPayment = async (orderData) => {
   //   })
   //   },
 
-   handler: async (res) => {
-  const verify = await axios.post(`${localbackendurl}/verify`, res);
-  if (verify.status === 200) {
-    const currentEmail = auth.currentUser?.email; 
+//    handler: async (res) => {
+//   const verify = await axios.post(`${localbackendurl}/verify`, res);
+//   if (verify.status === 200) {
+//     const currentEmail = auth.currentUser?.email; 
 
-    await axios.post('https://strawberry-backend.onrender.com/api/send', {
-      email: currentEmail,
-      orderId: orderData.id,
-      amount: orderData.amount / 100,
-    });
+//     await axios.post('https://strawberry-backend.onrender.com/api/send', {
+//       email: currentEmail,
+//       orderId: orderData.id,
+//       amount: orderData.amount / 100,
+//     });
 
-    alert("Payment Success");
-    navi("/order");
-  } else {
-    alert("Payment Failed");
-  }
-},
+//     alert("Payment Success");
+//     navi("/order");
+//   } else {
+//     alert("Payment Failed");
+//   }
+// },
+//     theme: { color: "#d0c1f0" },
+//   };
+
+   handler:async(res)=>{
+    await axios.post(`${localbackendurl}/verify`,res).then((res)=>{
+      if(res.status === 200){
+        alert("Payment sucess");
+
+      }else{
+        alert("Payment Failed")
+      }
+    })
+    },
     theme: { color: "#d0c1f0" },
   };
 
