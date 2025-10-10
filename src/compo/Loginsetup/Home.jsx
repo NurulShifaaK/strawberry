@@ -65,7 +65,7 @@ const Home = () => {
 
    <div className="absolute bottom-0 right-0 w-[170px] h-[90px] bg-white"></div>
 
-      </div>
+    </div>
 
    
    <div className="hidden md:block">
