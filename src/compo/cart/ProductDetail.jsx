@@ -208,170 +208,88 @@
 
 
 import React, { useEffect, useState, useContext } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { db } from "../../firebasedata.js";
-import { doc, getDoc } from "firebase/firestore";
-import { CartContext } from "../../context/CartContext";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Blog from "./Blog.jsx";
 import { auth } from "../../firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
+import { CartContext } from "../../context/CartContext";
 
 const ProductDetail = () => {
   const navi = useNavigate();
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState({ description: "Test product", rate: 100, skin: "All" });
   const [userEmail, setUserEmail] = useState(null);
 
   const { addToCart } = useContext(CartContext);
 
-  // 🔹 Hardcoded backend URL for local testing
-  const localbackendurl = "https://strawberry-backend.onrender.com/api/payment";
+  const backendURL = "https://strawberry-backend.onrender.com/api/payment";
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserEmail(user.email);
-        console.log("Logged in user:", user.email);
-      } else {
-        setUserEmail(null);
-      }
+      if (user) setUserEmail(user.email);
     });
-
     return () => unsubscribe();
   }, []);
 
-  const handlebuynow = async () => {
-    try {
-      const { data } = await axios.post(`${localbackendurl}`, { amount: product.rate });
-      initPayment(data.data);
-    } catch (err) {
-      console.error("Payment order creation failed:", err);
-    }
-  };
-
-  const loadRazorpayScript = () => {
-    return new Promise((resolve) => {
+  const loadRazorpayScript = () =>
+    new Promise((resolve) => {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.onload = () => resolve(true);
       script.onerror = () => resolve(false);
       document.body.appendChild(script);
     });
-  };
 
   const initPayment = async (orderData) => {
     const res = await loadRazorpayScript();
-    if (!res) {
-      alert("Razorpay SDK failed to load. Check your internet connection.");
-      return;
-    }
+    if (!res) return alert("Razorpay SDK failed to load.");
 
     const options = {
-      key: "rzp_test_RQx3HfvLghKrHW", // 🔹 Hardcoded Razorpay test key
+      key: "rzp_test_RQx3HfvLghKrHW",
       amount: orderData.amount,
       currency: orderData.currency,
       description: "Test Payment",
       order_id: orderData.id,
-      handler: async (res) => {
+      handler: async (response) => {
         try {
-          const verify = await axios.post(`${localbackendurl}/verify`, res);
+          const verify = await axios.post(`${backendURL}/verify`, {
+            ...response,
+            email: userEmail,
+          });
+
           if (verify.status === 200) {
-            const currentEmail = auth.currentUser?.email;
-
-            await axios.post("https://strawberry-backend.onrender.com/api/send", {
-              email: currentEmail,
-              orderId: orderData.id,
-              amount: orderData.amount / 100,
-            });
-
-            alert("Payment Success");
+            alert("Payment Success & Email Sent");
             navi("/order");
           } else {
             alert("Payment Failed");
           }
         } catch (err) {
-          console.error("Payment verification error:", err);
-          alert("Payment Failed");
+          console.error(err);
+          alert("Payment verification failed");
         }
       },
       theme: { color: "#d0c1f0" },
     };
 
-    const razorpayPopup = new window.Razorpay(options);
-    razorpayPopup.open();
+    const rzp = new window.Razorpay(options);
+    rzp.open();
   };
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const docRef = doc(db, "products", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setProduct({ id: docSnap.id, ...docSnap.data() });
-        } else {
-          setProduct(null);
-        }
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [id]);
-
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
-  if (!product) return <p className="text-center mt-10">Product not found</p>;
+  const handleBuyNow = async () => {
+    try {
+      const { data } = await axios.post(backendURL, { amount: product.rate });
+      initPayment(data.data);
+    } catch (err) {
+      console.error("Payment order creation failed:", err);
+    }
+  };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto relative">
-      <div className="w-2/5 md:w-[300px] h-[300px] md:h-[400px]">
-        <img
-          src={product.src}
-          alt={product.description}
-          className="w-full h-full object-cover rounded-lg shadow"
-        />
-        <Link to="/allproduct">
-          <button className="bg-violet-500 absolute top-0 right-0 text-white px-6 py-1 rounded m-6 hover:bg-violet-400">
-            Back
-          </button>
-        </Link>
-      </div>
-
-      <h1 className="mt-6 text-2xl font-bold">{product.description}</h1>
-      <p className="mt-4 text-gray-600">
-        {product.bigDescription ||
-          "This product is carefully crafted to rejuvenate, protect, and nourish your skin with every use."}
-      </p>
-
-      <p className="font-semibold text-lg my-4">Recommended for {product.skin} skin</p>
-      <p className="mt-4 text-xl font-semibold">${product.rate}</p>
-
-      <div className="flex gap-2">
-        <button
-          onClick={handlebuynow}
-          className="bg-violet-500 text-white px-6 py-1 rounded my-2 hover:bg-violet-400"
-        >
-          Buy
-        </button>
-
-        <Link to="/carts" state={{ product }}>
-          <button
-            onClick={() => addToCart(product)}
-            className="bg-violet-500 text-white px-6 py-1 rounded my-2 hover:bg-violet-400"
-          >
-            Add to Wishlist
-          </button>
-        </Link>
-      </div>
-
-      <div className="mt-4">
-        <p className="font-bold text-2xl text-black/80">Review</p>
-        <Blog />
-      </div>
+    <div className="p-6 max-w-3xl mx-auto">
+      <h1>{product.description}</h1>
+      <p>Price: ${product.rate}</p>
+      <button onClick={handleBuyNow}>Buy Now</button>
+      <button onClick={() => addToCart(product)}>Add to Wishlist</button>
     </div>
   );
 };
