@@ -8,10 +8,9 @@ import Weather from "./Weather";
 import {auth} from "../../firebase"
 
 import Spline from '@splinetool/react-spline';
-import AuroraHome from "./AuroraHome";
 
 
-import { motion } from "framer-motion";
+
 
 
 
@@ -67,10 +66,7 @@ const Home = () => {
 
     </div>
 
-   
-   <div className="hidden md:block">
-<AuroraHome/>
-</div>
+ 
 
 <div className="md:mt-4">
      <Delivery/>
