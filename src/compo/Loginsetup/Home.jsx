@@ -8,8 +8,10 @@ import Weather from "./Weather";
 import {auth} from "../../firebase"
 
 import Spline from '@splinetool/react-spline';
+import AuroraHome from "./AuroraHome";
 
 
+import { motion } from "framer-motion";
 
 
 
@@ -54,23 +56,25 @@ const Home = () => {
 
 
         <Brands />
-      <p className="font-bold text-black/80 text-2xl text-center">Features Of Aurora</p>
-      <p className="font-semibold text-black/80 text-sm font-serif text-center">Meet your skin’s new favorite obsession</p>
-      
-    <div className="relative w-full h-[300px] sm:h-[400px] mx-auto bg-white md:hidden">
+    
+     <p className="text-center text-black/50 font-semibold text-2xl md:hidden">Features of Aurora</p>
+    <div className="relative w-full h-[300px] sm:h-[400px]  bg-white md:hidden">
 
    <Spline scene="https://prod.spline.design/IiBz4kW2RN1Ee1xm/scene.splinecode" />
 
-   
 
    <div className="absolute bottom-0 right-0 w-[170px] h-[90px] bg-white"></div>
+
       </div>
 
+   
+   <div className="hidden md:block">
+<AuroraHome/>
+</div>
 
-
-
+<div className="md:mt-4">
      <Delivery/>
-      
+      </div>
 
 
       <Footer />
