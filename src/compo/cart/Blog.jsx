@@ -77,9 +77,9 @@ const Blog = () => {
       <div className='flex items-baseline justify-center bg-white max-w-screen-sm mx-auto w-full'>
         <div className='w-full'>
 
-          <div className='flex gap-3 text-center mt-12'>
+          <div className='flex gap-3 text-center mt-2 items-center'>
             <input
-              className='border border-black/20 shadow-2xl w-full rounded-xl px-4 py-2 h-12'
+              className='border border-black/10 shadow w-full rounded-xl px-4 py-2 h-8'
               value={post}
               onChange={(e) => setPost(e.target.value)}
               placeholder='Your Review..'
@@ -89,7 +89,7 @@ const Blog = () => {
             <button
               onClick={handlePost}
               disabled={loading}
-              className='m-4 bg-violet-500 text-white px-8 rounded py-1'
+              className='m-4 bg-violet-500 text-white px-8 rounded py-1 shadow'
             >
                 {
              loading ? "Posting..." : "Post"
@@ -101,8 +101,9 @@ const Blog = () => {
         </div>
       </div>
       
+      <p className='text-violet-400 text font-bold w-full mt-2'>Users Review:</p>
+    <div className='grid mt-2 gap-6 grid-cols-2'>
 
-    <div className='grid mt-2 gap-6 grid-cols-1'>
         
   {upload.map((note) => (
     <div  key={note.id}  className='  flex items-baseline-last justify-between px-4 py-2 border border-gray-200 rounded-xl shadow-md

@@ -118,8 +118,7 @@ const initPayment = async (orderData) => {
      handler:async(res)=>{
     await axios.post(`${localbackendurl}/verify`,res).then( async(res)=>{
       if(res.status === 200){
-
-       navi("order")
+        navi("order")
        
       }else{
         alert("Payment Failed")
@@ -200,7 +199,7 @@ const initPayment = async (orderData) => {
       </div>
       
       <div className="mt-4">
-      <p className="font-bold text-2xl text-black/80">Review</p>
+      <p className="font-semibold text-lg text-black/80">Review</p>
    <Blog/>
       </div>
     </div>
