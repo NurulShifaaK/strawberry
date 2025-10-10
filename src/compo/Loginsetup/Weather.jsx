@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import weather from "../../assets/product/weather.mp4"
+// import weather from "../../assets/product/weather.mp4"
 
 const Weather = () => {
   const [city, setCity] = useState("");
@@ -120,7 +120,7 @@ const Weather = () => {
   return (
     <div className="relative h-[400px] w-full rounded overflow-hidden">
       
-      <video
+      {/* <video
         autoPlay
         loop
         muted
@@ -128,7 +128,7 @@ const Weather = () => {
         className="absolute inset-0 w-full h-full object-cover"
       >
         <source src={weather} type="video/mp4" />
-      </video>
+      </video> */}
 
     
       <div className="absolute inset-0 bg-black/40"></div>
