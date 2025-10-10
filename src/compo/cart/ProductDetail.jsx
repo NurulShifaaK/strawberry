@@ -283,7 +283,7 @@ const ProductDetail = () => {
     addOrder(product);
 
     // 2️⃣ Send email via backend API
-    const res = await axios.get("http://localhost:8000/sendemail",);
+    const res = await axios.get("https://strawberry-backend.onrender.com/sendemail",);
 
     // 3️⃣ Check response from backend
     if (res.status === 200) {
