@@ -289,7 +289,7 @@ const ProductDetail = () => {
       currency: orderData.currency,
       description: "Test Payment",
       order_id: orderData.id,
-      handler: async (response) => {
+      handler: async (res) => {
         try {
           // Make sure user email is available
           const currentEmail = userEmail || auth.currentUser?.email;
@@ -299,9 +299,11 @@ const ProductDetail = () => {
           }
 
           // Verify payment with backend
-          const verify = await axios.post(`${localbackendurl}/verify`, response);
+          const verify = await axios.post(`${localbackendurl}/verify`, res);
+          alert("Payment Success & Email Sent");
+
           if (verify.status === 200) {
-            // Send confirmation email
+           
             await axios.post(`${localbackendurl}/send`, {
               email: currentEmail,
               orderId: orderData.id,
