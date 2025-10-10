@@ -100,7 +100,7 @@ const initPayment = async (orderData) => {
   if (verify.status === 200) {
     const currentEmail = auth.currentUser?.email; 
 
-    await axios.post("https://strawberry-backend.onrender.com/api/send", {
+    await axios.post('https://strawberry-backend.onrender.com/api/send', {
       email: currentEmail,
       orderId: orderData.id,
       amount: orderData.amount / 100,
@@ -177,7 +177,7 @@ const initPayment = async (orderData) => {
         <button 
         onClick={()=>addToCart(product)} 
          className="bg-violet-500 text-white px-6 py-1 rounded my-2
-         hover:bg-violet-400">Add to Whislist</button>
+         hover:bg-violet-400">Add to Whishlist</button>
          </Link>
 
  

@@ -79,7 +79,7 @@ const Blog = () => {
 
           <div className='text-center mt-12'>
             <input
-              className='border border-black/20 shadow-2xl w-full rounded-2xl px-4 py-2 h-12'
+              className='border border-black/20 shadow-2xl w-full rounded-xl px-4 py-2 h-12'
               value={post}
               onChange={(e) => setPost(e.target.value)}
               placeholder='Your Review..'
@@ -89,7 +89,7 @@ const Blog = () => {
             <button
               onClick={handlePost}
               disabled={loading}
-              className='m-4 bg-violet-400 text-white px-8 rounded py-1'
+              className='m-4 bg-violet-500 text-white px-8 rounded py-1'
             >
                 {
              loading ? "Posting..." : "Post"
@@ -113,7 +113,7 @@ const Blog = () => {
     {
      admin?  ( <button
         onClick={()=>deleteblog(note.id)}
-         className='bg-violet-400 text-white/80 font-bold px-4 py-1 rounded' >
+         className=' text-red' >
             Delete</button>): ""
 }
    
