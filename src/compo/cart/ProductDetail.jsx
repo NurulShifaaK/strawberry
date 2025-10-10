@@ -115,19 +115,19 @@ const initPayment = async (orderData) => {
 //     theme: { color: "#d0c1f0" },
 //   };
 
-   handler:async(res)=>{
-   await axios.post(`${localbackendurl}/verify`,res)
+     handler:async(res)=>{
+    await axios.post(`${localbackendurl}/verify`,res).then((res)=>{
       if(res.status === 200){
         alert("Payment sucess");
-        // await axios.get(`${localbackendurl}/sendemail`)
 
       }else{
         alert("Payment Failed")
       }
-    
+    })
     },
     theme: { color: "#d0c1f0" },
   };
+
 
   const razorpay_popup = new window.Razorpay(options);
   razorpay_popup.open();
