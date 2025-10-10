@@ -225,9 +225,10 @@ const ProductDetail = () => {
   const [userEmail, setUserEmail] = useState(null);
 
   const { addToCart } = useContext(CartContext);
+
   const localbackendurl = "https://strawberry-backend.onrender.com/api/payment";
 
-  // Listen to Firebase Auth state
+  // Detect logged-in user email
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -240,7 +241,7 @@ const ProductDetail = () => {
     return () => unsubscribe();
   }, []);
 
-  // Fetch product details from Firestore
+  // Fetch product from Firestore
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -260,7 +261,10 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id]);
 
-  // Load Razorpay script
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (!product) return <p className="text-center mt-10">Product not found</p>;
+
+  // Load Razorpay SDK
   const loadRazorpayScript = () =>
     new Promise((resolve) => {
       const script = document.createElement("script");
@@ -278,8 +282,8 @@ const ProductDetail = () => {
       return;
     }
 
-    if (!document.body) {
-      alert("DOM not ready for Razorpay.");
+    if (!document.body || !window.Razorpay) {
+      alert("DOM or Razorpay not ready yet. Try again.");
       return;
     }
 
@@ -287,23 +291,17 @@ const ProductDetail = () => {
       key: "rzp_test_RQx3HfvLghKrHW",
       amount: orderData.amount,
       currency: orderData.currency,
-      description: "Test Payment",
+      description: "Aurora Skincare Payment",
       order_id: orderData.id,
-      handler: async (res) => {
+      handler: async (response) => {
         try {
-          // Make sure user email is available
           const currentEmail = userEmail || auth.currentUser?.email;
-          if (!currentEmail) {
-            alert("User not logged in!");
-            return;
-          }
+          if (!currentEmail) return alert("User not logged in!");
 
-          // Verify payment with backend
-          const verify = await axios.post(`${localbackendurl}/verify`, res);
-          alert("Payment Success & Email Sent");
-
+          // Verify payment on backend
+          const verify = await axios.post(`${localbackendurl}/verify`, response);
           if (verify.status === 200) {
-           
+            // Send email via backend
             await axios.post(`${localbackendurl}/send`, {
               email: currentEmail,
               orderId: orderData.id,
@@ -323,26 +321,27 @@ const ProductDetail = () => {
       theme: { color: "#d0c1f0" },
     };
 
-    // Open Razorpay after ensuring DOM is ready
+    // Open Razorpay safely
     setTimeout(() => {
-      const rzp = new window.Razorpay(options);
-      rzp.open();
+      if (window.Razorpay) {
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      } else {
+        alert("Razorpay failed to initialize. Refresh and try again.");
+      }
     }, 100);
   };
 
   // Handle Buy Now button
   const handlebuynow = async () => {
-    if (!product) return alert("Product not loaded yet!");
+    if (!product) return alert("Product not loaded yet");
     try {
-      const { data } = await axios.post(localbackendurl, { amount: product.rate });
+      const { data } = await axios.post(`${localbackendurl}`, { amount: product.rate });
       initPayment(data.data);
     } catch (err) {
       console.error("Payment order creation failed:", err);
     }
   };
-
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
-  if (!product) return <p className="text-center mt-10">Product not found</p>;
 
   return (
     <div className="p-6 max-w-3xl mx-auto relative">
@@ -362,10 +361,10 @@ const ProductDetail = () => {
       <h1 className="mt-6 text-2xl font-bold">{product.description}</h1>
       <p className="mt-4 text-gray-600">
         {product.bigDescription ||
-          "This product is carefully crafted to rejuvenate, protect, and nourish your skin with every use. Designed for all skin types, it delivers a gentle yet effective formula that restores natural balance, enhances hydration, and promotes a visibly radiant complexion. Enriched with a blend of botanical extracts, vitamins, and essential nutrients, it works deep within the skin’s layers to combat dullness, dryness, and uneven texture."}
+          "This product is carefully crafted to rejuvenate, protect, and nourish your skin with every use. Designed for all skin types, it delivers a gentle yet effective formula that restores natural balance, enhances hydration, and promotes a visibly radiant complexion."}
       </p>
 
-      <p className="font-semibold text-lg my-4"> This product Recommended for {product.skin} skin </p>
+      <p className="font-semibold text-lg my-4">This product Recommended for {product.skin} skin</p>
       <p className="mt-4 text-xl font-semibold">${product.rate}</p>
 
       <div className="flex gap-2">
