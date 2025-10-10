@@ -119,7 +119,7 @@ const initPayment = async (orderData) => {
     await axios.post(`${localbackendurl}/verify`,res).then( async(res)=>{
       if(res.status === 200){
         alert("Payment sucess");
-         await axios.post(`${localbackendurl}/sendemail`)
+         await axios.get(`${localbackendurl}/sendemail`)
       }else{
         alert("Payment Failed")
       }
