@@ -21,7 +21,7 @@ const Navbar = () => {
     { name: "Home", path: "/home" },
     { name: "Products", path: "/allproduct" },
     { name: "Dermo", path: "/dermo" },
-    { name: "Analyzer", path: "/analyzer" },
+    { name: "Order", path: "/order" },
   ];
 
   return (
@@ -92,7 +92,7 @@ const Navbar = () => {
         <div className="space-y-4 px-6 py-6 w-48 mt-6">
           <Link to={"/home"}><p className="hover:underline p-2">Home</p></Link>
          <Link to={"/allproduct"}><p className="hover:underline p-2">Products</p></Link> 
-         <Link to={"/allproduct"}><p className="hover:underline p-2">Orders</p></Link> 
+         <Link to={"/order"}><p className="hover:underline p-2">Orders</p></Link> 
           <Link to={"/carts"}><p className="hover:underline p-2">Cart</p></Link> 
           <Link to={"/allproduct"}><p className="hover:underline p-2">Chat With Us</p></Link> 
           <p className="hover:underline bg-violet-400 px-2 py-1 rounded mt-4 text-white font-semibold">Login</p>

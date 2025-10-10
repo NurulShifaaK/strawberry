@@ -1,214 +1,358 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams ,useNavigate} from "react-router-dom";
-import { db } from "../../firebasedata.js";
-import { doc, getDoc } from "firebase/firestore";
-import { useContext } from "react";
-import { CartContext } from "../../context/CartContext";
-import axios from "axios";
-import Blog from "./Blog.jsx";
-import {auth} from "../../firebase.js"
-import { onAuthStateChanged } from "firebase/auth";
+// import React, { useEffect, useState } from "react";
+// import { Link, useParams ,useNavigate} from "react-router-dom";
+// import { db } from "../../firebasedata.js";
+// import { doc, getDoc } from "firebase/firestore";
+// import { useContext } from "react";
+// import { CartContext } from "../../context/CartContext";
+// import axios from "axios";
+// import Blog from "./Blog.jsx";
+// import {auth} from "../../firebase.js"
+// import { onAuthStateChanged } from "firebase/auth";
 
 
 
-const ProductDetail = () => {
-  const navi=useNavigate()
-  const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [userEmail, setUserEmail] = useState(null);
+// const ProductDetail = () => {
+//   const navi=useNavigate()
+//   const { id } = useParams();
+//   const [product, setProduct] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [userEmail, setUserEmail] = useState(null);
 
 
-  const { addToCart } = useContext(CartContext);
-
-  const localbackendurl = 'https://strawberry-backend.onrender.com/api/payment'
+//   const { addToCart,addOrder } = useContext(CartContext);
 
 
-   useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUserEmail(user.email);
-      console.log("Logged in user:", user.email);
-    } else {
-      setUserEmail(null);
-    }
-  });
-
-  return () => unsubscribe(); 
-}, []);
+//   const localbackendurl = 'http://localhost:8000/api/payment'
 
 
+//    useEffect(() => {
+//   const unsubscribe = onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//       setUserEmail(user.email);
+//       console.log("Logged in user:", user.email);
+//     } else {
+//       setUserEmail(null);
+//     }
+//   });
 
-const handlebuynow = async () => {
-  try {
-    const { data } = await axios.post(`${localbackendurl}`, { amount: product.rate });
-    initPayment(data.data);
-  } catch (err) {
-    console.error("Payment order creation failed:", err);
-  }
-};
+//   return () => unsubscribe(); 
+// }, []);
 
 
 
-  const loadRazorpayScript = () => {
-  return new Promise((resolve) => {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
-    document.body.appendChild(script);
-  });
-};
+// const handlebuynow = async () => {
+//   try {
+//     const { data } = await axios.post(`${localbackendurl}`, { amount: product.rate });
+//     initPayment(data.data);
+//   } catch (err) {
+//     console.error("Payment order creation failed:", err);
+//   }
+// };
 
-const initPayment = async (orderData) => {
-  const res = await loadRazorpayScript();
-  if (!res) {
-    alert("Razorpay SDK failed to load. Check your internet connection.");
-    return;
-  }
 
-  const options = {
-    key: "rzp_test_RQx3HfvLghKrHW",
-    amount: orderData.amount,
-    currency: orderData.currency,
-    description: "Test Payment method",
-    order_id: orderData.id,
+
+//   const loadRazorpayScript = () => {
+//   return new Promise((resolve) => {
+//     const script = document.createElement("script");
+//     script.src = "https://checkout.razorpay.com/v1/checkout.js";
+//     script.onload = () => resolve(true);
+//     script.onerror = () => resolve(false);
+//     document.body.appendChild(script);
+//   });
+// };
+
+// const initPayment = async (orderData) => {
+//   const res = await loadRazorpayScript();
+//   if (!res) {
+//     alert("Razorpay SDK failed to load. Check your internet connection.");
+//     return;
+//   }
+
+//   const options = {
+//     key: "rzp_test_RQx3HfvLghKrHW",
+//     amount: orderData.amount,
+//     currency: orderData.currency,
+//     description: "Test Payment method",
+//     order_id: orderData.id,
   
-  //   handler:async(res)=>{
-  //  const verify= await axios.post(`${localbackendurl}/verify`,res).then((res)=>{
-  //     if(res.status === 200){
-  //       alert("Payment sucess");
+//   //   handler:async(res)=>{
+//   //  const verify= await axios.post(`${localbackendurl}/verify`,res).then((res)=>{
+//   //     if(res.status === 200){
+//   //       alert("Payment sucess");
         
 
-  //       await axios.post("http://localhost:8000/api/send-confirmation", {
-  //         email: userEmail,
-  //         orderId: order.data.data.id,
-  //         amount: order.data.data.amount / 100,
-  //       });
+//   //       await axios.post("http://localhost:8000/api/send-confirmation", {
+//   //         email: userEmail,
+//   //         orderId: order.data.data.id,
+//   //         amount: order.data.data.amount / 100,
+//   //       });
 
-  //         navi("/order")
-  //     }
+//   //         navi("/order")
+//   //     }
       
-  //     else{
-  //       alert("Payment Failed")
-  //     }
-  //   })
-  //   },
+//   //     else{
+//   //       alert("Payment Failed")
+//   //     }
+//   //   })
+//   //   },
 
-//    handler: async (res) => {
-//   const verify = await axios.post(`${localbackendurl}/verify`, res);
-//   if (verify.status === 200) {
-//     const currentEmail = auth.currentUser?.email; 
+// //    handler: async (res) => {
+// //   const verify = await axios.post(`${localbackendurl}/verify`, res);
+// //   if (verify.status === 200) {
+// //     const currentEmail = auth.currentUser?.email; 
 
-//     await axios.post('https://strawberry-backend.onrender.com/api/send', {
-//       email: currentEmail,
-//       orderId: orderData.id,
-//       amount: orderData.amount / 100,
-//     });
+// //     await axios.post('https://strawberry-backend.onrender.com/api/send', {
+// //       email: currentEmail,
+// //       orderId: orderData.id,
+// //       amount: orderData.amount / 100,
+// //     });
 
-//     alert("Payment Success");
-//     navi("/order");
-//   } else {
-//     alert("Payment Failed");
-//   }
-// },
+// //     alert("Payment Success");
+// //     navi("/order");
+// //   } else {
+// //     alert("Payment Failed");
+// //   }
+// // },
+// //     theme: { color: "#d0c1f0" },
+// //   };
+
+//      handler:async(res)=>{
+//     await axios.post(`${localbackendurl}/verify`,res).then( async(res)=>{
+//       if(res.status === 200){
+//       alert("Payment Sucess") 
+//          addOrder(product);   
+//         navi("/order");
+
+//       }else{
+//         alert("Payment Failed")
+//       }
+//     })
+//     },
 //     theme: { color: "#d0c1f0" },
 //   };
 
-     handler:async(res)=>{
-    await axios.post(`${localbackendurl}/verify`,res).then( async(res)=>{
-      if(res.status === 200){
-      alert("Payment Sucess") 
-         addOrder(product);   
-        navi("/order");
 
-      }else{
-        alert("Payment Failed")
-      }
-    })
-    },
-    theme: { color: "#d0c1f0" },
-  };
+//   const razorpay_popup = new window.Razorpay(options);
+//   razorpay_popup.open();
+// };
 
 
-  const razorpay_popup = new window.Razorpay(options);
-  razorpay_popup.open();
-};
+//   useEffect(() => {
+//     const fetchProduct = async () => {
+//       try {
+//         const docRef = doc(db, "products", id);
+//         const docSnap = await getDoc(docRef);
+//         if (docSnap.exists()) {
+//           setProduct({ id: docSnap.id, ...docSnap.data() });
+//         } else {
+//           setProduct(null);
+//         }
+//       } catch (error) {
+//         console.error("Error fetching product:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchProduct();
+//   }, [id]);
+
+//   if (loading) return <p className="text-center mt-10">Loading...</p>;
+//   if (!product) return <p className="text-center mt-10">Product not found</p>;
+
+//   return (
+//     <div className="p-6 max-w-3xl mx-auto relative">
+//       <div className="w-2/5 md:w-[300px] h-[300px] md:h-[400px] ">
+//         <img
+//           src={product.src}
+//           alt={product.description}
+//           className="w-full h-full object-cover rounded-lg shadow"
+//         />
+//         <Link to={"/allproduct"}>
+//         <button className="bg-violet-500 absolute top-0 right-0 text-white px-6 py-1 rounded m-6 hover:bg-violet-400">Back</button></Link>
+//       </div>
+
+//       <h1 className="mt-6 text-2xl font-bold">{product.description}</h1>
+//       <p className="mt-4 text-gray-600">
+//         {product.bigDescription ||
+//           "This product is carefully crafted to rejuvenate, protect, and nourish your skin with every use. Designed for all skin types, it delivers a gentle yet effective formula that restores natural balance, enhances hydration, and promotes a visibly radiant complexion. Enriched with a blend of botanical extracts, vitamins, and essential nutrients, it works deep within the skin’s layers to combat dullness, dryness, and uneven texture."}
+//       </p>
+       
+      
+//        <p className="font-semibold text-lg my-4"> This product Recommended for {product.skin} skin </p>
+//       <p className="mt-4 text-xl font-semibold">${product.rate}</p>
+     
+//      <div className="flex gap-2">
+
+//      <button
+//       onClick={handlebuynow}
+//      className="bg-violet-500 text-white px-6 py-1 rounded my-2
+//       hover:bg-violet-400">Buy</button>
+
+//       <Link to="/carts"
+//       state={{product}}>
+//         <button 
+//         onClick={()=>addToCart(product)} 
+//          className="bg-violet-500 text-white px-6 py-1 rounded my-2
+//          hover:bg-violet-400">Add to Whishlist</button>
+//          </Link>
+
+ 
+
+//       </div>
+      
+//       <div className="mt-4">
+//       <p className="font-semibold text-lg text-black/80">Review</p>
+//    <Blog/>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProductDetail;
 
 
+
+import React, { useEffect, useState, useContext } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { db } from "../../firebasedata.js";
+import { doc, getDoc } from "firebase/firestore";
+import { CartContext } from "../../context/CartContext";
+import Blog from "./Blog.jsx";
+import axios from "axios";
+
+const ProductDetail = () => {
+  const { id } = useParams();
+  const navi = useNavigate();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const { addToCart, addOrder } = useContext(CartContext);
+
+  // Fetch product from Firestore
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const docRef = doc(db, "products", id);
         const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setProduct({ id: docSnap.id, ...docSnap.data() });
-        } else {
-          setProduct(null);
-        }
-      } catch (error) {
-        console.error("Error fetching product:", error);
+        if (docSnap.exists()) setProduct({ id: docSnap.id, ...docSnap.data() });
+        else setProduct(null);
+      } catch (err) {
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
-
     fetchProduct();
   }, [id]);
+
+  // Load Razorpay script
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const handleBuyNow = async () => {
+    const res = await loadRazorpayScript();
+    if (!res) return alert("Razorpay SDK failed to load");
+
+    const options = {
+      key: "rzp_test_RQx3HfvLghKrHW",
+      amount: product.rate * 100, // paisa
+      currency: "INR",
+      name: "Aurora Skincare",
+      description: product.description,
+    //   handler: function (response) {
+       
+    //     addOrder(product); 
+      
+
+    // navi("/order");
+         
+    //   },
+
+
+    handler: async function (response) {
+  try {
+    // 1️⃣ Add order to frontend context
+    addOrder(product);
+
+    // 2️⃣ Send email via backend API
+    const res = await axios.get("http://localhost:8000/sendemail",);
+
+    // 3️⃣ Check response from backend
+    if (res.status === 200) {
+      alert("Payment Successful! Email sent.");
+    } else {
+      alert("Payment Successful! But email not sent.");
+    }
+
+    // 4️⃣ Navigate to order page
+    navi("/order");  
+  } catch (error) {
+    console.error("Error sending email:", error);
+    alert("Payment Successful! But email failed to send.");
+    navi("/order"); 
+  }
+},
+
+      theme: { color: "#d0c1f0" },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (!product) return <p className="text-center mt-10">Product not found</p>;
 
   return (
     <div className="p-6 max-w-3xl mx-auto relative">
-      <div className="w-2/5 md:w-[300px] h-[300px] md:h-[400px] ">
+      <div className="w-2/5 md:w-[300px] h-[300px] md:h-[400px]">
         <img
           src={product.src}
           alt={product.description}
           className="w-full h-full object-cover rounded-lg shadow"
         />
-        <Link to={"/allproduct"}>
-        <button className="bg-violet-500 absolute top-0 right-0 text-white px-6 py-1 rounded m-6 hover:bg-violet-400">Back</button></Link>
+        <Link to="/allproduct">
+          <button className="bg-violet-500 absolute top-0 right-0 text-white px-6 py-1 rounded m-6 hover:bg-violet-400">
+            Back
+          </button>
+        </Link>
       </div>
 
       <h1 className="mt-6 text-2xl font-bold">{product.description}</h1>
-      <p className="mt-4 text-gray-600">
-        {product.bigDescription ||
-          "This product is carefully crafted to rejuvenate, protect, and nourish your skin with every use. Designed for all skin types, it delivers a gentle yet effective formula that restores natural balance, enhances hydration, and promotes a visibly radiant complexion. Enriched with a blend of botanical extracts, vitamins, and essential nutrients, it works deep within the skin’s layers to combat dullness, dryness, and uneven texture."}
-      </p>
-       
-      
-       <p className="font-semibold text-lg my-4"> This product Recommended for {product.skin} skin </p>
+      <p className="mt-4 text-gray-600">{product.bigDescription || "This product is carefully crafted..."}</p>
+      <p className="font-semibold text-lg my-4">Recommended for {product.skin} skin</p>
       <p className="mt-4 text-xl font-semibold">${product.rate}</p>
-     
-     <div className="flex gap-2">
 
-     <button
-      onClick={handlebuynow}
-     className="bg-violet-500 text-white px-6 py-1 rounded my-2
-      hover:bg-violet-400">Buy</button>
+      <div className="flex gap-2 mt-4">
+        <button
+          onClick={handleBuyNow}
+          className="bg-violet-500 text-white px-6 py-1 rounded hover:bg-violet-400"
+        >
+          Buy Now
+        </button>
 
-      <Link to="/carts"
-      state={{product}}>
-        <button 
-        onClick={()=>addToCart(product)} 
-         className="bg-violet-500 text-white px-6 py-1 rounded my-2
-         hover:bg-violet-400">Add to Whishlist</button>
-         </Link>
-
- 
-
+        <button
+          onClick={() => addToCart(product)}
+          className="bg-violet-500 text-white px-6 py-1 rounded hover:bg-violet-400"
+        >
+          Add to Wishlist
+        </button>
       </div>
-      
-      <div className="mt-4">
-      <p className="font-semibold text-lg text-black/80">Review</p>
-   <Blog/>
+
+      <div className="mt-6">
+        <p className="font-semibold text-lg text-black/80">Review</p>
+        <Blog />
       </div>
     </div>
   );
 };
 
 export default ProductDetail;
-
-
-

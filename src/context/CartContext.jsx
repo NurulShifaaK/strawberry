@@ -34,6 +34,12 @@ export const CartProvider = ({ children }) => {
     setCartItems((prev) => prev.filter((item) => item.description !== description));
   };
 
+
+   // remove order function
+  const removeOrder = (description) => {
+    setOrders((prev) => prev.filter((item) => item.description !== description));
+  };
+
     const clearCart = () => setCartItems([]);
 
       const addOrder = (product) => {
@@ -42,7 +48,7 @@ export const CartProvider = ({ children }) => {
 
 
   return (
-    <CartContext.Provider value={{ cartItems, orders, addToCart, removeFromCart, clearCart, addOrder }}>
+    <CartContext.Provider value={{ cartItems, orders, addToCart, removeFromCart, clearCart, addOrder ,removeOrder}}>
       {children}
     </CartContext.Provider>
   );

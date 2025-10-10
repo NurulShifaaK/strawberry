@@ -208,7 +208,7 @@ console.log("Products:", products);
                {/* <button><img
                 src={heart}
                 className="h-[5px]"/></button> */}
-                <button>Add</button>
+               
               </div>
             </div>
           ))

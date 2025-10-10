@@ -102,7 +102,7 @@ const Blog = () => {
       </div>
       
       <p className='text-violet-400 text font-bold w-full mt-2'>Users Review:</p>
-    <div className='grid mt-2 gap-6 grid-cols-2'>
+    <div className='grid mt-2 gap-6 grid-cols-1 md:grid-cols-2'>
 
         
   {upload.map((note) => (
