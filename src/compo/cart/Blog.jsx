@@ -77,7 +77,7 @@ const Blog = () => {
       <div className='flex items-baseline justify-center bg-white max-w-screen-sm mx-auto w-full'>
         <div className='w-full'>
 
-          <div className='text-center mt-12'>
+          <div className='flex gap-3 text-center mt-12'>
             <input
               className='border border-black/20 shadow-2xl w-full rounded-xl px-4 py-2 h-12'
               value={post}
@@ -113,7 +113,7 @@ const Blog = () => {
     {
      admin?  ( <button
         onClick={()=>deleteblog(note.id)}
-         className=' text-red' >
+         className='text-red-500' >
             Delete</button>): ""
 }
    
