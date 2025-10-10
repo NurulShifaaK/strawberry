@@ -12,6 +12,10 @@ import upload from "../../assets/admin/upload.png"
 import ProductDetail from "./ProductDetail.jsx";
 import { Link } from "react-router-dom";
 import {auth} from "../../firebase"
+import heart from "../../assets/heart.png"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+
 
 
 const AllProducts = () => {
@@ -24,6 +28,7 @@ const AllProducts = () => {
   const [uploadclick,setuploadclick]=useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [admin,setadmin]=useState(false)
+  const [liked, setLiked] = useState(false);
 
   //firebase auth
   
@@ -201,6 +206,22 @@ console.log("Products:", products);
                { admin?(
                 <button onClick={() => handleDelete(img.id)} className="text-red-500 hover:underline">Delete</button>):null}
                <Link to={`/product/${img.id}`}> <button onClick={() => handleSelect(img)}>View</button> </Link> 
+               {/* <button><img
+                src={heart}
+                className="h-[5px]"/></button> */}
+                 <button
+      onClick={() => setLiked(!liked)}
+      className="transition-transform duration-200"
+    >
+      <FontAwesomeIcon
+        icon={faHeart}
+        className={`text-xl transform transition-all duration-300 ${
+          liked
+            ? "text-violet-500 scale-110" 
+            : "text-black/20 hover:text-violet-400 hover:scale-110" 
+        }`}
+      />
+    </button>
               </div>
             </div>
           ))
